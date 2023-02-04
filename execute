@@ -33,6 +33,7 @@ if [ $# -gt 0 ]; then
 
         docker run --rm -it  \
             -w /app \
+            --env-file ./.env \
             -v $(pwd):/app \
             node:latest \
             npm "$@"
@@ -56,6 +57,17 @@ if [ $# -gt 0 ]; then
             -v $(pwd):/app \
             node:latest \
             yarn "$@"
+
+    elif [ "$1" == "publish" ]; then
+        shift 1
+
+        docker run --rm -it  \
+            -w /app \
+            --env-file ./.env \
+            -v $(pwd):/app \
+            node:latest \
+            npm publish
+
     # Pass unknown commands to the "docker" binary...
     else
         docker "$@"

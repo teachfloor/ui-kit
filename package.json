@@ -1,7 +1,8 @@
 {
-  "name": "teachfloor-ui-kit",
+  "name": "@teachfloor/ui-kit",
   "version": "0.1.0",
-  "private": true,
+  "description": "Teachfloor UI Kit is a react components library focused on usability, accessibility and developer experience based on Mantine library",
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@mantine/carousel": "^5.10.2",
@@ -15,6 +16,7 @@
     "@mantine/nprogress": "^5.10.2",
     "@mantine/prism": "^5.10.2",
     "@mantine/spotlight": "^5.10.2",
+    "@tabler/icons-react": "^2.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -75,5 +77,16 @@
     "babel-plugin-named-exports-order": "^0.0.2",
     "prop-types": "^15.8.1",
     "webpack": "^5.75.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefanomarra/ui-kit.git"
+  },
+  "author": "Stefano Marra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefanomarra/ui-kit/issues"
+  },
+  "homepage": "https://github.com/stefanomarra/ui-kit#readme"
 }

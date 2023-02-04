@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+/**
+ * Mantine library
+ */
+export * from './icons'
+export * from './hooks'
+export * from './core'
+export * from './form'
+export * from './dates'
+export * from './carousel'
+export * from './dropzone'
+export * from './modals'
+export * from './nprogress'
+export * from './notifications'
+export * from './prism'
+export * from './spotlight'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+/**
+ * Teachfloor
+ */
+export * from './theme'
