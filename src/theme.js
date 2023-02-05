@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import { MantineProvider, createEmotionCache } from './core'
 import { NotificationsProvider } from './notifications'

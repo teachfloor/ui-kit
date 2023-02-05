@@ -1,3 +1,4 @@
+import React from 'react'
 import { TeachfloorProvider } from '../src'
 
 export const decorators = [

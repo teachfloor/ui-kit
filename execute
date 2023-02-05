@@ -38,6 +38,17 @@ if [ $# -gt 0 ]; then
             node:latest \
             npm "$@"
 
+    # Publish the package to NPM...
+    elif [ "$1" == "publish" ]; then
+        shift 1
+
+        docker run --rm -it  \
+            -w /app \
+            --env-file ./.env \
+            -v $(pwd):/app \
+            node:latest \
+            npm publish
+
     # Proxy NPX commands to the "npx" binary on the application container...
     elif [ "$1" == "npx" ]; then
         shift 1
@@ -57,16 +68,6 @@ if [ $# -gt 0 ]; then
             -v $(pwd):/app \
             node:latest \
             yarn "$@"
-
-    elif [ "$1" == "publish" ]; then
-        shift 1
-
-        docker run --rm -it  \
-            -w /app \
-            --env-file ./.env \
-            -v $(pwd):/app \
-            node:latest \
-            npm publish
 
     # Pass unknown commands to the "docker" binary...
     else
