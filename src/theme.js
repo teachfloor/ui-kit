@@ -78,7 +78,18 @@ export const theme = {
    * Object of arrays with 10 colors
    */
   colors: {
-    brand: ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#FF00A1', '#E00890', '#C50E82', '#AD1374'],
+    brand: [
+      "#C5DBFF",
+      "#9CC2FF",
+      "#76ABFF",
+      "#5496FF",
+      "#3683FF",
+      "#1A72FF",
+      "#0062FF",
+      "#0058E6",
+      "#004FCF",
+      "#0047BA"
+    ],
   },
 
   /**
@@ -138,8 +149,8 @@ export const theme = {
 }
 
 /**
- * Teachfloor wrapper around mantine providers.
- * Loads custom teachfloor brand theme style.
+ * Teachfloor wrapper around Mantine providers.
+ * Applies Teachfloor brand theme style.
  */
 export const TeachfloorProvider = ({
   children,
@@ -171,4 +182,10 @@ TeachfloorProvider.propTypes = {
   notificationsProps: PropTypes.object,
   modalsProps: PropTypes.object,
   spotlightProps: PropTypes.object,
+}
+
+TeachfloorProvider.defaultProps = {
+  mantineProps: {
+    theme
+  },
 }
