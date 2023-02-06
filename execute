@@ -39,7 +39,7 @@ if [ $# -gt 0 ]; then
             npm "$@"
 
     # Publish the package to NPM...
-    elif [ "$1" == "publish" ]; then
+    elif [ "$1" == "release" ]; then
         shift 1
 
         docker run --rm -it  \
@@ -47,7 +47,9 @@ if [ $# -gt 0 ]; then
             --env-file ./.env \
             -v $(pwd):/app \
             node:latest \
-            npm publish
+            git config --global user.email "${GIT_USER_EMAIL}" \
+            git config --global user.name "${GIT_USER_NAME}" \
+            npm run release
 
     # Proxy NPX commands to the "npx" binary on the application container...
     elif [ "$1" == "npx" ]; then
