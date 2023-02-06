@@ -146,6 +146,78 @@ export const theme = {
   // },
   // radius: '',
   // spacing: '',
+
+  /**
+   * Values used for box-shadow
+   */
+  // shadows: Record < 'xs' | 'sm' | 'md' | 'lg' | 'xl', string>,
+
+  /**
+   * Breakpoints used in some components to add responsive styles
+   */
+  // breakpoints: Record < 'xs' | 'sm' | 'md' | 'lg' | 'xl', number>,
+
+  /**
+   * Styles added to buttons with `:active` pseudo-class
+   */
+  // activeStyles: CSSObject,
+
+  /**
+   * h1-h6 styles, used in Title and TypographyStylesProvider components
+   */
+  // headings: {
+  //   fontFamily: CSSProperties['fontFamily'],
+  //   fontWeight: CSSProperties['fontWeight'],
+  //   sizes: {
+  //     // See heading options below
+  //     h1: Heading,
+  //     h2: Heading,
+  //     h3: Heading,
+  //     h4: Heading,
+  //     h5: Heading,
+  //     h6: Heading,
+  //   },
+  // },
+
+  /**
+   * theme functions, see in theme functions guide
+   */
+  // fn: MantineThemeFunctions,
+
+  /**
+   * Left to right or right to left direction, see RTL Support guide to learn more
+   */
+  // dir: 'ltr' | 'rtl'
+
+  /**
+   * Default loader used in Loader and LoadingOverlay components
+   */
+  // loader: 'oval' | 'bars' | 'dots',
+
+  /**
+   * Default date format used in DatePicker and DateRangePicker components
+   */
+  // dateFormat: string,
+
+  /**
+   * Default dates formatting locale used in every @mantine/dates component
+   */
+  // datesLocale: string,
+
+  /**
+   * defaultProps, styles and classNames for components
+   */
+  // components: ComponentsOverride,
+
+  /**
+   * Global styles
+   */
+  // globalStyles: (theme: MantineTheme) => CSSObject,
+
+  /**
+   * Add your own custom properties on Mantine theme
+   */
+  // other: Record < string, any>,
 }
 
 /**
