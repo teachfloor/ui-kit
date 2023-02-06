@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MantineProvider, createEmotionCache } from './core'
+import {
+  MantineProvider,
+  useMantineTheme,
+  createEmotionCache,
+} from './core'
 import { NotificationsProvider } from './notifications'
 import { ModalsProvider } from './modals'
 import { SpotlightProvider } from './spotlight'
@@ -221,8 +225,17 @@ export const theme = {
 }
 
 /**
+ * Equivalent of calling the useMantineTheme hook
+ *
+ * https://mantine.dev/theming/theme-object/#use-mantine-theme-hook
+ */
+export const useTeachfloorTheme = useMantineTheme
+
+/**
  * Teachfloor wrapper around Mantine providers.
  * Applies Teachfloor brand theme style.
+ *
+ * Use `TeachfloorProvider` to wrap your entire application to apply the brand theme.
  */
 export const TeachfloorProvider = ({
   children,

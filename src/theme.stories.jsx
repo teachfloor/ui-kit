@@ -2,6 +2,9 @@ import React from 'react'
 
 import {
   TeachfloorProvider,
+  useTeachfloorTheme,
+  theme,
+
   Flex,
   Button,
   Chip,
@@ -19,7 +22,6 @@ import {
   Image,
   Group,
   Grid,
-  theme,
   showNotification,
 } from './'
 
@@ -27,19 +29,19 @@ import {
  * More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
  */
 export default {
-  title: 'Core/TeachfloorProvider',
+  title: 'Core/Theme',
   component: TeachfloorProvider,
 
   /**
    * More on argTypes: https://storybook.js.org/docs/react/api/argtypes
    */
   argTypes: {},
-};
+}
 
 /**
  * More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
  */
-const Template = (args) => (
+const TeachfloorProviderTemplate = (args) => (
   <TeachfloorProvider {...args}>
     <Flex
       gap="lg"
@@ -79,7 +81,7 @@ const Template = (args) => (
       >
         <Avatar
           size="lg"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+          src="https://avatars.githubusercontent.com/u/15775541?v=4"
           radius="xl"
           alt="it's me"
         />
@@ -127,14 +129,14 @@ const Template = (args) => (
       </Grid>
     </Flex>
   </TeachfloorProvider>
-);
+)
 
-export const Usage = Template.bind({});
+export const ThemeProvider = TeachfloorProviderTemplate.bind({})
 
 /**
  * More on args: https://storybook.js.org/docs/react/writing-stories/args
  */
-Usage.args = {
+ThemeProvider.args = {
   children: null,
   mantineProps: {
     theme: { ...theme }
@@ -142,4 +144,40 @@ Usage.args = {
   notificationsProps: {},
   modalsProps: {},
   spotlightProps: {},
-};
+}
+
+
+
+
+const CustomCard = () => {
+  const theme = useTeachfloorTheme()
+  return (
+    <Card style={{ background: theme.colors.brand[1] }}>
+      See code for more details on usage
+    </Card>
+  )
+}
+
+/**
+ * More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+ */
+const TeachfloorThemeTemplate = (args) => (
+  <TeachfloorProvider>
+    <CustomCard />
+  </TeachfloorProvider>
+)
+
+export const ThemeHook = TeachfloorThemeTemplate.bind({})
+
+/**
+ * More on args: https://storybook.js.org/docs/react/writing-stories/args
+ */
+ThemeHook.args = {}
+
+ThemeHook.parameters = {
+  docs: {
+    description: {
+      story: '`useTeachfloorTheme` hook returns the theme from the TeachfloorProvider context or default theme if you did not provide theme override. This hook is a wrapper around `useMantineTheme` https://mantine.dev/theming/theme-object/#use-mantine-theme-hook',
+    },
+  },
+}
