@@ -46,9 +46,8 @@ if [ $# -gt 0 ]; then
             -w /app \
             --env-file ./.env \
             -v $(pwd):/app \
+            -v ~/.gitconfig:/etc/gitconfig \
             node:latest \
-            git config --global user.email "${GIT_USER_EMAIL}" \
-            git config --global user.name "${GIT_USER_NAME}" \
             npm run release
 
     # Proxy NPX commands to the "npx" binary on the application container...
