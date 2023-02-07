@@ -24,6 +24,7 @@ import {
   Grid,
   showNotification,
 } from './'
+import styled, { css } from './styled'
 
 /**
  * More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -178,6 +179,45 @@ ThemeHook.parameters = {
   docs: {
     description: {
       story: '`useTeachfloorTheme` hook returns the theme from the TeachfloorProvider context or default theme if you did not provide theme override. This hook is a wrapper around `useMantineTheme` https://mantine.dev/theming/theme-object/#use-mantine-theme-hook',
+    },
+  },
+}
+
+
+
+
+const StyledComponentElement = styled.div`
+  display: block;
+  width: 100px;
+  height: 100px;
+
+  background-color: red;
+
+  ${({ theme }) => theme && css`
+    background-color: ${theme.colorScheme === 'dark' ? theme.colors.brand[1] : theme.colors.brand[8]};
+  `}
+`
+
+/**
+ * More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+ */
+const TeachfloorStyledComponentTemplate = (args) => (
+  <TeachfloorProvider>
+    <StyledComponentElement />
+  </TeachfloorProvider>
+)
+
+export const StyledComponent = TeachfloorStyledComponentTemplate.bind({})
+
+/**
+ * More on args: https://storybook.js.org/docs/react/writing-stories/args
+ */
+StyledComponent.args = {}
+
+StyledComponent.parameters = {
+  docs: {
+    description: {
+      story: 'To use styled components syntax, use `@teachfloor/ui-kit/styled` package. You will need to wrap your application with TheachfloorProvider, this will allow you to access prop `theme` in styles.',
     },
   },
 }

@@ -62,6 +62,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mantine/carousel": "^5.10.2",
     "@mantine/core": "^5.10.2",
     "@mantine/dates": "^5.10.2",
