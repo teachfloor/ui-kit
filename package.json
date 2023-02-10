@@ -103,6 +103,12 @@
     "release-it": "^15.6.0",
     "webpack": "^5.75.0"
   },
+  "bundledDependencies": [
+    "@mantine/hooks",
+    "@mantine/core",
+    "@emotion/react",
+    "mantine-datatable"
+  ],
   "release-it": {
     "github": {
       "release": true,
