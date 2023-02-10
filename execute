@@ -48,7 +48,7 @@ if [ $# -gt 0 ]; then
             -v $(pwd):/app \
             -v ~/.gitconfig:/etc/gitconfig \
             node:latest \
-            npm run release
+            npm run release && git push
 
     # Proxy NPX commands to the "npx" binary on the application container...
     elif [ "$1" == "npx" ]; then
