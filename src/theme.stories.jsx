@@ -23,8 +23,10 @@ import {
   Group,
   Grid,
   showNotification,
+  styled,
+  css,
+  Table,
 } from './'
-import styled, { css } from './styled'
 
 /**
  * More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -129,6 +131,7 @@ const TeachfloorProviderTemplate = (args) => (
         </Grid.Col>
       </Grid>
     </Flex>
+    <Table />
   </TeachfloorProvider>
 )
 
@@ -217,7 +220,7 @@ StyledComponent.args = {}
 StyledComponent.parameters = {
   docs: {
     description: {
-      story: 'To use styled components syntax, use `@teachfloor/ui-kit/styled` package. You will need to wrap your application with TheachfloorProvider, this will allow you to access prop `theme` in styles.',
+      story: 'To use styled components syntax, use `import { styled, css } from @teachfloor/ui-kit`. You will need to wrap your application with TheachfloorProvider, this will allow you to access prop `theme` in styles.',
     },
   },
 }

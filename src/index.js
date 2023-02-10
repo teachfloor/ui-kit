@@ -1,3 +1,5 @@
+import Table from './Table'
+
 /**
  * Mantine library
  */
@@ -17,4 +19,7 @@ export * from './spotlight'
 /**
  * Teachfloor
  */
+export * from './styled'
 export * from './theme'
+
+export { Table }
