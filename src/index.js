@@ -1,5 +1,3 @@
-import Table from './Table'
-
 /**
  * Mantine library
  */
@@ -21,5 +19,3 @@ export * from './spotlight'
  */
 export * from './styled'
 export * from './theme'
-
-export { Table }
