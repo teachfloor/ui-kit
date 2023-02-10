@@ -26,7 +26,7 @@
     "url": "https://github.com/teachfloor/ui-kit/issues"
   },
   "scripts": {
-    "release": "npm run build && release-it --no-github.release",
+    "release": "npm run build && release-it --no-git.push --no-github.release",
     "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files --no-copy-ignored",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
