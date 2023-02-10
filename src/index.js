@@ -15,6 +15,11 @@ export * from './prism'
 export * from './spotlight'
 
 /**
+ * Mantine addons
+ */
+export * from 'mantine-datatable'
+
+/**
  * Teachfloor
  */
 export * from './styled'
