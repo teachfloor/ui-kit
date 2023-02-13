@@ -239,25 +239,26 @@ export const useTeachfloorTheme = useMantineTheme
  */
 export const TeachfloorProvider = ({
   children,
+  theme: propTheme,
   mantineProps = {},
   notificationsProps = {},
   modalsProps = {},
   spotlightProps = {},
 }) => (
   <MantineProvider
-    theme={theme}
+    theme={propTheme || theme}
     emotionCache={emotionCache}
     withGlobalStyles
     withNormalizeCSS
     {...mantineProps}
   >
-    {/* <NotificationsProvider {...notificationsProps}> */}
-      {/* <ModalsProvider {...modalsProps}> */}
-        {/* <SpotlightProvider actions={[]} {...spotlightProps}> */}
+    <NotificationsProvider {...notificationsProps}>
+      <ModalsProvider {...modalsProps}>
+        <SpotlightProvider actions={[]} {...spotlightProps}>
           {children}
-        {/* </SpotlightProvider> */}
-      {/* </ModalsProvider> */}
-    {/* </NotificationsProvider> */}
+        </SpotlightProvider>
+      </ModalsProvider>
+    </NotificationsProvider>
   </MantineProvider>
 )
 
