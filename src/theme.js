@@ -252,11 +252,11 @@ export const TeachfloorProvider = ({
     {...mantineProps}
   >
     {/* <NotificationsProvider {...notificationsProps}> */}
-      <ModalsProvider {...modalsProps}>
-        <SpotlightProvider actions={[]} {...spotlightProps}>
+      {/* <ModalsProvider {...modalsProps}> */}
+        {/* <SpotlightProvider actions={[]} {...spotlightProps}> */}
           {children}
-        </SpotlightProvider>
-      </ModalsProvider>
+        {/* </SpotlightProvider> */}
+      {/* </ModalsProvider> */}
     {/* </NotificationsProvider> */}
   </MantineProvider>
 )
