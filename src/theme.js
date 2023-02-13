@@ -243,7 +243,6 @@ export const TeachfloorProvider = ({
   notificationsProps = {},
   modalsProps = {},
   spotlightProps = {},
-  spotlightActions = [],
 }) => (
   <MantineProvider
     theme={theme}
@@ -254,7 +253,7 @@ export const TeachfloorProvider = ({
   >
     <NotificationsProvider {...notificationsProps}>
       <ModalsProvider {...modalsProps}>
-        <SpotlightProvider actions={spotlightActions} {...spotlightProps}>
+        <SpotlightProvider actions={[]} {...spotlightProps}>
           {children}
         </SpotlightProvider>
       </ModalsProvider>
