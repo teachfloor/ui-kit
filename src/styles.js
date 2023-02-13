@@ -1,4 +1,4 @@
-export const color = {
+const color = {
   // Palette
   primary: '#0062FF',
   secondary: '#FFC542',
@@ -21,7 +21,7 @@ export const color = {
   warning: '#E69D00',
 };
 
-export const typography = {
+const typography = {
   type: {
     primary: '"Roboto", sans-serif',
     code: '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace',
@@ -49,7 +49,7 @@ export const typography = {
   },
 };
 
-export const spacing = {
+const spacing = {
   padding: {
     none: 0,
     xsmall: 5,
@@ -75,7 +75,7 @@ export const spacing = {
   },
 };
 
-export const responsive = {
+const responsive = {
   columns: 12,
   breakpoints: {
     xs: 0,
@@ -85,3 +85,11 @@ export const responsive = {
     xl: 1200,
   },
 };
+
+export const styles = {
+  color,
+  colors: color,
+  typography,
+  spacing,
+  responsive,
+}
