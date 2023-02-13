@@ -251,13 +251,13 @@ export const TeachfloorProvider = ({
     withNormalizeCSS
     {...mantineProps}
   >
-    <NotificationsProvider {...notificationsProps}>
+    {/* <NotificationsProvider {...notificationsProps}> */}
       <ModalsProvider {...modalsProps}>
         <SpotlightProvider actions={[]} {...spotlightProps}>
           {children}
         </SpotlightProvider>
       </ModalsProvider>
-    </NotificationsProvider>
+    {/* </NotificationsProvider> */}
   </MantineProvider>
 )
 
