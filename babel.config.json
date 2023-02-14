@@ -15,4 +15,7 @@
     ],
     "@babel/preset-react"
   ],
+  "ignore": [
+    "src/**/*.stories.js"
+  ]
 }

@@ -27,7 +27,7 @@
   },
   "scripts": {
     "release": "npm run build && release-it --no-git.push --no-github.release",
-    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files --no-copy-ignored --ignore '**/*.stories.jsx'",
+    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --ignore '**/*.stories.jsx'",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
