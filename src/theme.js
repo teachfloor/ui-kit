@@ -61,9 +61,11 @@ export const theme = {
 
   /**
    * Determines whether elements that do not have pointer cursor by default
-   * (checkboxes, radio, native select) should have it
+   * (checkboxes, radio, native select) should have it.
+   *
+   * Default: 'default'
    */
-  cursorType: 'default',
+  cursorType: 'pointer',
 
   /**
    * Default border-radius used for most elements
@@ -163,8 +165,12 @@ export const theme = {
 
   /**
    * Styles added to buttons with `:active` pseudo-class
+   *
+   * Defaut: { transform: translateY(1px); }
    */
-  // activeStyles: CSSObject,
+  activeStyles: {
+    transform: 'scale(0.98)',
+  },
 
   /**
    * h1-h6 styles, used in Title and TypographyStylesProvider components
