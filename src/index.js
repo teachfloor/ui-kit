@@ -22,6 +22,7 @@ export * from 'mantine-datatable'
 /**
  * Teachfloor
  */
+export * from './components/ProgressDots'
 export * from './styled'
 export * from './theme'
 export * from './styles'
