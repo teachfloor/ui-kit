@@ -1,6 +1,6 @@
 {
   "name": "@teachfloor/ui-kit",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Teachfloor UI Kit is a react components library focused on usability, accessibility and developer experience based on Mantine library",
   "author": "Stefano Marra",
   "private": false,
