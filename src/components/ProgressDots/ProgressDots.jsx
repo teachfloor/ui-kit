@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {styled, css, keyframes }from '../../styled'
-import { color } from '../../styles'
+import { styled, css, keyframes }from '../../styled'
+import { styles } from '../../styles'
 
 const glow = keyframes`
 	0%, 100% { opacity: 1; }
@@ -23,7 +23,7 @@ const StyledProgressDots = styled.div`
 `;
 
 const Dot = styled.div`
-  background: ${color.medium};
+  background: ${styles.color.medium};
   display: inline-block;
   vertical-align: top;
   width: ${(props) => sizes[props.size] || props.size}px;
@@ -32,7 +32,7 @@ const Dot = styled.div`
   margin: 0 ${(props) => (sizes[props.size] || props.size) * 0.5}px;
 
   ${({ active }) => active && css`
-    background: ${color.mediumdark};
+    background: ${styles.color.mediumdark};
   `};
 
   ${({ loading }) => loading && css`
