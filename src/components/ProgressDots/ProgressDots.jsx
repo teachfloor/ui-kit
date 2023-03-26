@@ -58,7 +58,7 @@ const Dot = styled.div`
 
 
 
-export const ProgressDots = ({
+const ProgressDots = ({
   loading,
   dots,
   progress,
@@ -93,8 +93,6 @@ export const ProgressDots = ({
   )
 }
 
-
-
 ProgressDots.propTypes = {
   loading: PropTypes.bool,
   dots: PropTypes.number,
@@ -102,11 +100,11 @@ ProgressDots.propTypes = {
   size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
 };
 
-
-
 ProgressDots.defaultProps = {
   loading: false,
   dots: 4,
   progress: 0,
   size: 'sm',
 }
+
+export default ProgressDots
