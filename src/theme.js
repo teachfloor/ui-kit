@@ -5,9 +5,10 @@ import {
   useMantineTheme,
   createEmotionCache,
 } from './core'
-import { NotificationsProvider } from './notifications'
+import { DatesProvider } from './dates'
 import { ModalsProvider } from './modals'
 import { SpotlightProvider } from './spotlight'
+import { Notifications } from './notifications'
 
 const emotionCache = createEmotionCache({ key: 'teachfloor' })
 
@@ -247,6 +248,7 @@ export const TeachfloorProvider = ({
   children,
   theme: propTheme,
   mantineProps = {},
+  datesProps = {},
   notificationsProps = {},
   modalsProps = {},
   spotlightProps = {},
@@ -258,13 +260,14 @@ export const TeachfloorProvider = ({
     withNormalizeCSS
     {...mantineProps}
   >
-    <NotificationsProvider {...notificationsProps}>
+    <DatesProvider {...datesProps}>
+      <Notifications {...notificationsProps} />
       <ModalsProvider {...modalsProps}>
         <SpotlightProvider actions={[]} {...spotlightProps}>
           {children}
         </SpotlightProvider>
       </ModalsProvider>
-    </NotificationsProvider>
+    </DatesProvider>
   </MantineProvider>
 )
 
@@ -274,6 +277,7 @@ TeachfloorProvider.propTypes = {
   notificationsProps: PropTypes.object,
   modalsProps: PropTypes.object,
   spotlightProps: PropTypes.object,
+  datesProps: PropTypes.object,
 }
 
 TeachfloorProvider.defaultProps = {
