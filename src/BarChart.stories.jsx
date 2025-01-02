@@ -3,13 +3,13 @@ import React from 'react'
 import {
   TeachfloorProvider,
   Box,
-  LineChart,
+  BarChart,
   SimpleGrid,
 } from './'
 
 export default {
-  title: 'Components/LineChart',
-  component: LineChart,
+  title: 'Components/BarChart',
+  component: BarChart,
   parameters: {
     docs: {
       description: {
@@ -98,23 +98,23 @@ const sales = [
   }
 ]
 
-const LineChartTemplate = (args) => (
+const BarChartTemplate = (args) => (
   <TeachfloorProvider>
     <SimpleGrid>
       <Box w={730} h={250}>
-        <LineChart data={sales} {...args} x="date" y={['sold', 'profit', 'region']} />
+        <BarChart data={sales} {...args} x="date" y={['sold', 'profit', 'region']} />
       </Box>
       <Box w={730} h={250}>
-        <LineChart data={sales} x="date" y={{ value: 'sold', label: 'Sold' }} />
+        <BarChart data={sales} x="date" y={{ value: 'sold', label: 'Sold' }} />
       </Box>
       <Box w={730} h={250}>
-        <LineChart data={sales} x="date" y={[{ value: 'sold', label: 'Sold' }, { value: 'region', label: 'Region' }]} />
+        <BarChart data={sales} x="date" y={[{ value: 'sold', label: 'Sold' }, { value: 'region', label: 'Region' }]} />
       </Box>
     </SimpleGrid>
   </TeachfloorProvider>
 )
 
-export const Usage = LineChartTemplate.bind({})
+export const Usage = BarChartTemplate.bind({})
 
 Usage.args = {
   withTooltip: true,

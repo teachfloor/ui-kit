@@ -3,6 +3,7 @@ import React from 'react'
 import { Box } from '../../'
 
 import CustomTooltip from './Tooltip'
+import CustomLegend from './Legend'
 import CustomXTick from './XTick'
 import CustomYTick from './YTick'
 import useResizable from './useResizable'
@@ -28,6 +29,7 @@ export const BarChart = ({
   withLegend = false,
   withTooltip = true,
   tooltipComponent = null,
+  legendComponent = null,
   children,
 }) => {
   const { containerRef, width, height } = useResizable()
@@ -55,7 +57,6 @@ export const BarChart = ({
       if (typeof y === 'string') {
         return (
           <Bar
-            type="monotone"
             dataKey={y}
             // strokeWidth={2}
             fill={generateHexColor(0)}
@@ -64,17 +65,47 @@ export const BarChart = ({
         )
       }
 
-      if (Array.isArray(y)) {
-        return y.map((item, i) => (
+      if (typeof y === 'object' && !Array.isArray(y)) {
+        return (
           <Bar
-            type="monotone"
-            dataKey={item}
-            // strokeWidth={2}
-            fill={generateHexColor(i)}
+            dataKey={y.value}
+            name={y.label}
+            fill={generateHexColor(0)}
             isAnimationActive={false}
           />
-        ))
+        )
       }
+
+      if (Array.isArray(y)) {
+        return y.map((item, i) => {
+          if (typeof item === 'object' && !Array.isArray(item)) {
+            return (
+              <Bar
+                key={`${item.value}${i}`}
+                dataKey={item.value}
+                name={item.label}
+                fill={generateHexColor(i)}
+                isAnimationActive={false}
+              />
+            )
+          }
+
+          if (typeof item === 'string') {
+            return (
+              <Bar
+                key={`${item}${i}`}
+                dataKey={item}
+                fill={generateHexColor(i)}
+                isAnimationActive={false}
+              />
+            )
+          }
+
+          return null
+        })
+      }
+
+      return null
     }
 
     if (y) {
@@ -108,6 +139,18 @@ export const BarChart = ({
     return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
   }
 
+  const renderLegend = () => {
+    if (!withLegend) {
+      return null
+    }
+
+    if (legendComponent) {
+      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} />
+    }
+
+    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} />
+  }
+
   return (
     <Box ref={containerRef} w="100%" h="100%">
       {
@@ -118,7 +161,7 @@ export const BarChart = ({
               {renderXAxis()}
               {renderYAxis()}
               {renderTooltip()}
-              {withLegend ? <Legend /> : null}
+              {renderLegend()}
               {children}
             </Chart>
           )

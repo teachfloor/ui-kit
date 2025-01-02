@@ -3,8 +3,6 @@ import React from 'react'
 const YTick = (props) => {
   const { fill, x, y, payload, style } = props
 
-  console.log(props)
-
   return (
     <g>
       <text

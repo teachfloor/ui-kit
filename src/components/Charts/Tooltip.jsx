@@ -1,6 +1,12 @@
 import React from 'react'
 
-import { Box, Text } from '../../'
+import {
+  Box,
+  Text,
+  Group,
+  ColorSwatch,
+  SimpleGrid,
+} from '../../'
 
 const Tooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -11,17 +17,28 @@ const Tooltip = ({ active, payload, label }) => {
         radius="md"
         sx={(theme) => ({
           backgroundColor: '#FFF',
-          borderRadius: theme.radius.sm,
+          borderRadius: theme.radius.md,
           boxShadow: theme.shadows.sm,
+          border: `1px solid ${theme.colors.gray[2]}`
         })}
         miw={120}
       >
-        <Text size="sm" weight={500}>{label}</Text>
-        {
-          payload.map(({ dataKey, value, color }) => (
-            <Text size="sm" color={color}>{`${dataKey}: ${value}`}</Text>
-          ))
-        }
+        <SimpleGrid verticalSpacing="xs">
+          <Text size="sm" weight={500}>{label}</Text>
+          <SimpleGrid verticalSpacing={2}>
+            {
+              payload.map(({ name, dataKey, value, color }) => (
+                <Group key={`${dataKey}${color}${value}`} position="apart" spacing="xs" noWrap>
+                  <Group spacing="xs" noWrap>
+                    <ColorSwatch size={8} color={color} withShadow={false} />
+                    <Text size="sm" color="dimmed">{name || dataKey}</Text>
+                  </Group>
+                  <Text size="sm">{value}</Text>
+                </Group>
+              ))
+            }
+          </SimpleGrid>
+        </SimpleGrid>
       </Box>
     );
   }

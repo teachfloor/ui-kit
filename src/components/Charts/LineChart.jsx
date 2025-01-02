@@ -3,6 +3,7 @@ import React from 'react'
 import { Box } from '../../'
 
 import CustomTooltip from './Tooltip'
+import CustomLegend from './Legend'
 import CustomXTick from './XTick'
 import CustomYTick from './YTick'
 import useResizable from './useResizable'
@@ -28,6 +29,7 @@ export const LineChart = ({
   withLegend = false,
   withTooltip = true,
   tooltipComponent = null,
+  legendComponent = null,
   children,
 }) => {
   const { containerRef, width, height } = useResizable()
@@ -55,7 +57,7 @@ export const LineChart = ({
       if (typeof y === 'string') {
         return (
           <Line
-            type="monotone"
+            type="linear"
             dataKey={y}
             strokeWidth={2}
             stroke={generateHexColor(0)}
@@ -64,17 +66,53 @@ export const LineChart = ({
         )
       }
 
-      if (Array.isArray(y)) {
-        return y.map((item, i) => (
+      if (typeof y === 'object' && !Array.isArray(y)) {
+        return (
           <Line
-            type="monotone"
-            dataKey={item}
+            type={y.type || 'linear'}
+            dataKey={y.value}
+            name={y.label}
             strokeWidth={2}
-            stroke={generateHexColor(i)}
+            stroke={generateHexColor(0)}
             isAnimationActive={false}
           />
-        ))
+        )
       }
+
+      if (Array.isArray(y)) {
+        return y.map((item, i) => {
+          if (typeof item === 'object' && !Array.isArray(item)) {
+            return (
+              <Line
+                key={`${item.value}${i}`}
+                type={item.type || 'linear'}
+                dataKey={item.value}
+                name={item.label}
+                strokeWidth={2}
+                stroke={generateHexColor(i)}
+                isAnimationActive={false}
+              />
+            )
+          }
+
+          if (typeof item === 'string') {
+            return (
+              <Line
+                key={`${item}${i}`}
+                type="linear"
+                dataKey={item}
+                strokeWidth={2}
+                stroke={generateHexColor(i)}
+                isAnimationActive={false}
+              />
+            )
+          }
+
+          return null
+        })
+      }
+
+      return null
     }
 
     if (y) {
@@ -110,6 +148,18 @@ export const LineChart = ({
     return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
   }
 
+  const renderLegend = () => {
+    if (!withLegend) {
+      return null
+    }
+
+    if (legendComponent) {
+      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} />
+    }
+
+    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} />
+  }
+
   return (
     <Box ref={containerRef} w="100%" h="100%">
       {
@@ -120,7 +170,7 @@ export const LineChart = ({
               {renderXAxis()}
               {renderYAxis()}
               {renderTooltip()}
-              {withLegend ? <Legend /> : null}
+              {renderLegend()}
               {children}
             </Chart>
           )
