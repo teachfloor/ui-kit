@@ -40,6 +40,17 @@ export const LineChart = ({
     yAxisWidthModifier: (x) => (x + 5)
   })
 
+  const yFormatters = Array.isArray(y)
+    ? y.reduce((acc, item) => {
+      acc[item.value] = item.formatter || ((val) => val)
+      return acc
+    }, {})
+    : { [y.value || y]: y.formatter || ((val) => val) }
+
+  const getFormatter = (dataKey) => {
+    return yFormatters[dataKey]
+  }
+
   const renderXAxis = () => {
     if (typeof x === 'string') {
       return (
@@ -121,16 +132,11 @@ export const LineChart = ({
     }
 
     if (y) {
-      console.log(data)
-
       return (
         <>
           <YAxis
             // axisLine={false}
-            // tick={false}
-            // tickSize={0}
-            tick={<CustomYTick />}
-            // tickCount={2}
+            tick={<CustomYTick formatter={getFormatter(y.value || y)} />}
             style={{ fontSize: 12 }}
             axisLine={{ stroke: 'rgb(204, 204, 204)' }}
             tickLine={{ stroke: 'rgb(204, 204, 204)' }}
@@ -159,7 +165,7 @@ export const LineChart = ({
       return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {...tooltipProps} />
     }
 
-    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} {...tooltipProps} />
+    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip formatters={yFormatters} />} {...tooltipProps} />
   }
 
   const renderLegend = () => {

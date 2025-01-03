@@ -2,11 +2,14 @@ import { useMemo } from 'react'
 
 const useHexColors = () => {
   const generateHexColor = (index) => {
-    const hue = index * 137.508; // Golden angle
-    const saturation = 60; // Vibrancy
-    const lightness = 50; // Balanced brightness
+    const startingHue = 215; // Hue for #1c7ed6
+    const saturation = 60; // Saturation for #1c7ed6
+    const lightness = 54; // Lightness for #1c7ed6
 
-    return hslToHex(hue % 360, saturation, lightness);
+    const goldenAngle = 137.508; // Golden angle in degrees
+    const hue = (startingHue + index * goldenAngle) % 360;
+
+    return hslToHex(hue, saturation, lightness);
   };
 
   const hslToHex = (h, s, l) => {

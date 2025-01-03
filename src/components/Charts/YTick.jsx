@@ -1,8 +1,13 @@
 import React from 'react'
 
-const YTick = (props) => {
-  const { fill, x, y, payload, style } = props
-
+const YTick = ({
+  fill,
+  x,
+  y,
+  payload,
+  formatter,
+  style,
+}) => {
   return (
     <g>
       <text
@@ -13,7 +18,13 @@ const YTick = (props) => {
         style={style}
         className="recharts-cartesian-y-axis-tick-value"
       >
-        <tspan x={x} dy="0.355em">{payload.value}</tspan>
+        <tspan x={x} dy="0.355em">
+          {
+            formatter
+              ? formatter(payload.value)
+              : payload.value
+          }
+        </tspan>
       </text>
     </g>
   );

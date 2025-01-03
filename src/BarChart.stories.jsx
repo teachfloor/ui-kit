@@ -23,92 +23,33 @@ export default {
   },
 }
 
-const sales = [
-  {
-    date: 'Jan',
-    sold: 5,
-    profit: 11,
-    region: 2
-  },
-  {
-    date: 'Feb',
-    sold: 6,
-    profit: 13,
-    region: 1
-  },
-  {
-    date: 'Mar',
-    sold: 7,
-    profit: 15,
-    region: 3
-  },
-  {
-    date: 'Apr',
-    sold: 8,
-    profit: 16,
-    region: 2
-  },
-  {
-    date: 'May',
-    sold: 6,
-    profit: 14,
-    region: 1
-  },
-  {
-    date: 'Jun',
-    sold: 9,
-    profit: 17,
-    region: 4
-  },
-  {
-    date: 'Jul',
-    sold: 10,
-    profit: 18,
-    region: 3
-  },
-  {
-    date: 'Aug',
-    sold: 11,
-    profit: 19,
-    region: 2
-  },
-  {
-    date: 'Sep',
-    sold: 6,
-    profit: 12,
-    region: 4
-  },
-  {
-    date: 'Oct',
-    sold: 7,
-    profit: 14,
-    region: 1
-  },
-  {
-    date: 'Nov',
-    sold: 8,
-    profit: 16,
-    region: 3
-  },
-  {
-    date: 'Dec',
-    sold: 9,
-    profit: 17,
-    region: 2
-  }
-]
+const generateSalesData = () => {
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
+  const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+  return months.map((month) => ({
+    date: month,
+    sold: getRandomValue(5, 12), // Random values for 'sold' between 5 and 12
+    profit: getRandomValue(10, 20), // Random values for 'profit' between 10 and 20
+    region: getRandomValue(1, 4) // Random region between 1 and 4
+  }));
+}
 
 const BarChartTemplate = (args) => (
   <TeachfloorProvider>
     <SimpleGrid>
       <Box w={730} h={250}>
-        <BarChart data={sales} {...args} x="date" y={['sold', 'profit', 'region']} />
+        <BarChart data={generateSalesData()} {...args} x="date" y={['sold', 'profit', 'region']} />
       </Box>
       <Box w={730} h={250}>
-        <BarChart data={sales} x="date" y={{ value: 'sold', label: 'Sold' }} />
+        <BarChart data={generateSalesData()} x="date" y={{ value: 'sold', label: 'Sold', formatter: (val) => `$${val}` }} />
       </Box>
       <Box w={730} h={250}>
-        <BarChart data={sales} x="date" y={[{ value: 'sold', label: 'Sold' }, { value: 'region', label: 'Region' }]} />
+        <BarChart data={generateSalesData()} x="date" y={[{ value: 'sold', label: 'Sold', formatter: (val) => `$${val}` }, { value: 'region', label: 'Region' }]} />
       </Box>
     </SimpleGrid>
   </TeachfloorProvider>

@@ -8,12 +8,12 @@ import {
   SimpleGrid,
 } from '../../'
 
-const Tooltip = ({ active, payload, label }) => {
+const Tooltip = ({ active, payload, label, formatters, ...props }) => {
   if (active && payload && payload.length) {
     return (
       <Box
-        p="md"
-        py="xs"
+        p="sm"
+        py={4}
         radius="md"
         sx={(theme) => ({
           backgroundColor: '#FFF',
@@ -23,17 +23,23 @@ const Tooltip = ({ active, payload, label }) => {
         })}
         miw={120}
       >
-        <SimpleGrid verticalSpacing="xs">
+        <SimpleGrid verticalSpacing={4}>
           <Text size="sm" weight={500}>{label}</Text>
-          <SimpleGrid verticalSpacing={2}>
+          <SimpleGrid verticalSpacing={0}>
             {
               payload.map(({ name, dataKey, value, color }) => (
-                <Group key={`${dataKey}${color}${value}`} position="apart" spacing="xs" noWrap>
+                <Group key={`${dataKey}${color}${value}`} position="apart" spacing="lg" noWrap>
                   <Group spacing="xs" noWrap>
                     <ColorSwatch size={8} color={color} withShadow={false} />
                     <Text size="sm" color="dimmed">{name || dataKey}</Text>
                   </Group>
-                  <Text size="sm">{value}</Text>
+                  <Text size="sm">
+                    {
+                      (formatters && formatters[dataKey])
+                        ? formatters[dataKey](value)
+                        : value
+                    }
+                  </Text>
                 </Group>
               ))
             }
