@@ -31,6 +31,7 @@ export const LineChart = ({
   tooltipComponent = null,
   legendComponent = null,
   children,
+  ...props
 }) => {
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
@@ -165,7 +166,7 @@ export const LineChart = ({
       {
         (width && height)
           ? (
-            <Chart data={data} width={width} height={height}>
+            <Chart data={data} width={width} height={height} {...props}>
               <CartesianGrid vertical={false} horizontal />
               {renderXAxis()}
               {renderYAxis()}
