@@ -11,6 +11,7 @@ const YTick = (props) => {
         fill={fill}
         textAnchor="end"
         style={style}
+        className="recharts-cartesian-y-axis-tick-value"
       >
         <tspan x={x} dy="0.355em">{payload.value}</tspan>
       </text>

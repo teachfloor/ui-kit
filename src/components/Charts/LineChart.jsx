@@ -8,6 +8,7 @@ import CustomXTick from './XTick'
 import CustomYTick from './YTick'
 import useResizable from './useResizable'
 import useHexColors from './useHexColors'
+import useYAxisAutoWidth from './useYAxisAutoWidth'
 
 import {
   CartesianGrid,
@@ -35,6 +36,9 @@ export const LineChart = ({
 }) => {
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
+  const { yAxisWidth, chartRef } = useYAxisAutoWidth({
+    yAxisWidthModifier: (x) => (x + 5)
+  })
 
   const renderXAxis = () => {
     if (typeof x === 'string') {
@@ -117,6 +121,8 @@ export const LineChart = ({
     }
 
     if (y) {
+      console.log(data)
+
       return (
         <>
           <YAxis
@@ -128,6 +134,7 @@ export const LineChart = ({
             style={{ fontSize: 12 }}
             axisLine={{ stroke: 'rgb(204, 204, 204)' }}
             tickLine={{ stroke: 'rgb(204, 204, 204)' }}
+            width={yAxisWidth}
           />
           {renderYData()}
         </>
@@ -138,15 +145,21 @@ export const LineChart = ({
   }
 
   const renderTooltip = () => {
+    const tooltipProps = {
+      allowEscapeViewBox: { x: false, y: true },
+      animationDuration: 150,
+      wrapperStyle: { zIndex: 1000 },
+    }
+
     if (!withTooltip) {
       return null
     }
 
     if (tooltipComponent) {
-      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} />
+      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {...tooltipProps} />
     }
 
-    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
+    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} {...tooltipProps} />
   }
 
   const renderLegend = () => {
@@ -166,7 +179,7 @@ export const LineChart = ({
       {
         (width && height)
           ? (
-            <Chart data={data} width={width} height={height} {...props}>
+            <Chart ref={chartRef} data={data} width={width} height={height} {...props}>
               <CartesianGrid vertical={false} horizontal />
               {renderXAxis()}
               {renderYAxis()}
