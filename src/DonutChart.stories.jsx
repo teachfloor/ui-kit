@@ -59,7 +59,7 @@ const data = [
 const DonutChartTemplate = (args) => (
   <TeachfloorProvider>
     <SimpleGrid>
-      <Box w={730} h={250}>
+      <Box h={250}>
         <DonutChart data={data} {...args} />
       </Box>
     </SimpleGrid>
