@@ -32,6 +32,7 @@ export const LineChart = ({
   tooltipComponent = null,
   legendComponent = null,
   children,
+  curveType = 'monotone',
   tooltipProps = {},
   legendProps = {},
   ...props
@@ -76,7 +77,7 @@ export const LineChart = ({
       if (typeof y === 'string') {
         return (
           <Line
-            type="natural"
+            type={curveType}
             dataKey={y}
             strokeWidth={2}
             stroke={generateHexColor(0)}
@@ -89,7 +90,7 @@ export const LineChart = ({
       if (typeof y === 'object' && !Array.isArray(y)) {
         return (
           <Line
-            type={y.type || 'natural'}
+            type={y.type || curveType}
             dataKey={y.value}
             name={y.label}
             strokeWidth={2}
@@ -106,7 +107,7 @@ export const LineChart = ({
             return (
               <Line
                 key={`${item.value}${i}`}
-                type={item.type || 'natural'}
+                type={item.type || curveType}
                 dataKey={item.value}
                 name={item.label}
                 strokeWidth={2}
