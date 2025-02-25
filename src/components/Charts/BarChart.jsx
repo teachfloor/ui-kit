@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box } from '../../'
+import { Box, useTeachfloorTheme } from '../../'
 
 import CustomTooltip from './Tooltip'
 import CustomLegend from './Legend'
@@ -32,8 +32,11 @@ export const BarChart = ({
   tooltipComponent = null,
   legendComponent = null,
   children,
+  tooltipProps = {},
+  legendProps = {},
   ...props
 }) => {
+  const theme = useTeachfloorTheme()
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
   const { yAxisWidth, chartRef } = useYAxisAutoWidth({
@@ -59,8 +62,8 @@ export const BarChart = ({
           tickSize={4}
           tick={<CustomXTick />}
           style={{ fontSize: 12 }}
-          axisLine={{ stroke: 'rgb(204, 204, 204)' }}
-          tickLine={{ stroke: 'rgb(204, 204, 204)' }}
+          axisLine={{ stroke: theme.colors.gray[3] }}
+          tickLine={{ stroke: theme.colors.gray[3] }}
         />
       )
     }
@@ -88,6 +91,7 @@ export const BarChart = ({
             name={y.label}
             fill={generateHexColor(0)}
             isAnimationActive={false}
+            radius={[4, 4, 0, 0]}
           />
         )
       }
@@ -102,6 +106,7 @@ export const BarChart = ({
                 name={item.label}
                 fill={generateHexColor(i)}
                 isAnimationActive={false}
+                radius={[4, 4, 0, 0]}
               />
             )
           }
@@ -113,6 +118,7 @@ export const BarChart = ({
                 dataKey={item}
                 fill={generateHexColor(i)}
                 isAnimationActive={false}
+                radius={[4, 4, 0, 0]}
               />
             )
           }
@@ -130,8 +136,8 @@ export const BarChart = ({
           <YAxis
             tick={<CustomYTick formatter={getFormatter(y.value || y)} />}
             style={{ fontSize: 12 }}
-            axisLine={{ stroke: 'rgb(204, 204, 204)' }}
-            tickLine={{ stroke: 'rgb(204, 204, 204)' }}
+            axisLine={{ stroke: theme.colors.gray[3] }}
+            tickLine={{ stroke: theme.colors.gray[3] }}
             width={yAxisWidth}
           />
           {renderYData()}
@@ -143,7 +149,7 @@ export const BarChart = ({
   }
 
   const renderTooltip = () => {
-    const tooltipProps = {
+    const _tooltipProps = {
       allowEscapeViewBox: { x: false, y: true },
       animationDuration: 150,
       wrapperStyle: { zIndex: 1000 },
@@ -154,10 +160,10 @@ export const BarChart = ({
     }
 
     if (tooltipComponent) {
-      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {...tooltipProps} />
+      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {..._tooltipProps} {...tooltipProps} />
     }
 
-    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip formatters={yFormatters} />} {...tooltipProps} />
+    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip formatters={yFormatters} />} {..._tooltipProps} {...tooltipProps} />
   }
 
   const renderLegend = () => {
@@ -166,10 +172,10 @@ export const BarChart = ({
     }
 
     if (legendComponent) {
-      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} />
+      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} {...legendProps} />
     }
 
-    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} />
+    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} {...legendProps} />
   }
 
   return (
@@ -178,7 +184,12 @@ export const BarChart = ({
         (width && height)
           ? (
             <Chart ref={chartRef} data={data} width={width} height={height} {...props}>
-              <CartesianGrid vertical={false} horizontal />
+              <CartesianGrid
+                vertical={false}
+                horizontal
+                strokeDasharray="4"
+                opacity={0.5}
+              />
               {renderXAxis()}
               {renderYAxis()}
               {renderTooltip()}

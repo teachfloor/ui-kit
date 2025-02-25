@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box } from '../../'
+import { Box, useTeachfloorTheme } from '../../'
 
 import CustomTooltip from './Tooltip'
 import CustomLegend from './Legend'
@@ -32,8 +32,11 @@ export const LineChart = ({
   tooltipComponent = null,
   legendComponent = null,
   children,
+  tooltipProps = {},
+  legendProps = {},
   ...props
 }) => {
+  const theme = useTeachfloorTheme()
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
   const { yAxisWidth, chartRef } = useYAxisAutoWidth({
@@ -59,8 +62,8 @@ export const LineChart = ({
           tickSize={4}
           style={{ fontSize: 12 }}
           tick={<CustomXTick />}
-          axisLine={{ stroke: 'rgb(204, 204, 204)' }}
-          tickLine={{ stroke: 'rgb(204, 204, 204)' }}
+          axisLine={{ stroke: theme.colors.gray[3] }}
+          tickLine={{ stroke: theme.colors.gray[3] }}
         />
       )
     }
@@ -73,11 +76,12 @@ export const LineChart = ({
       if (typeof y === 'string') {
         return (
           <Line
-            type="linear"
+            type="natural"
             dataKey={y}
             strokeWidth={2}
             stroke={generateHexColor(0)}
             isAnimationActive={false}
+            dot={false}
           />
         )
       }
@@ -85,12 +89,13 @@ export const LineChart = ({
       if (typeof y === 'object' && !Array.isArray(y)) {
         return (
           <Line
-            type={y.type || 'linear'}
+            type={y.type || 'natural'}
             dataKey={y.value}
             name={y.label}
             strokeWidth={2}
             stroke={generateHexColor(0)}
             isAnimationActive={false}
+            dot={false}
           />
         )
       }
@@ -101,12 +106,13 @@ export const LineChart = ({
             return (
               <Line
                 key={`${item.value}${i}`}
-                type={item.type || 'linear'}
+                type={item.type || 'natural'}
                 dataKey={item.value}
                 name={item.label}
                 strokeWidth={2}
                 stroke={generateHexColor(i)}
                 isAnimationActive={false}
+                dot={false}
               />
             )
           }
@@ -115,11 +121,12 @@ export const LineChart = ({
             return (
               <Line
                 key={`${item}${i}`}
-                type="linear"
+                type="natural"
                 dataKey={item}
                 strokeWidth={2}
                 stroke={generateHexColor(i)}
                 isAnimationActive={false}
+                dot={false}
               />
             )
           }
@@ -138,8 +145,8 @@ export const LineChart = ({
             // axisLine={false}
             tick={<CustomYTick formatter={getFormatter(y.value || y)} />}
             style={{ fontSize: 12 }}
-            axisLine={{ stroke: 'rgb(204, 204, 204)' }}
-            tickLine={{ stroke: 'rgb(204, 204, 204)' }}
+            axisLine={{ stroke: theme.colors.gray[3] }}
+            tickLine={{ stroke: theme.colors.gray[3] }}
             width={yAxisWidth}
           />
           {renderYData()}
@@ -151,7 +158,7 @@ export const LineChart = ({
   }
 
   const renderTooltip = () => {
-    const tooltipProps = {
+    const _tooltipProps = {
       allowEscapeViewBox: { x: false, y: true },
       animationDuration: 150,
       wrapperStyle: { zIndex: 1000 },
@@ -162,10 +169,10 @@ export const LineChart = ({
     }
 
     if (tooltipComponent) {
-      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {...tooltipProps} />
+      return <Tooltip cursor={{ fill: 'transparent' }} content={tooltipComponent} {..._tooltipProps} {...tooltipProps} />
     }
 
-    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip formatters={yFormatters} />} {...tooltipProps} />
+    return <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip formatters={yFormatters} />} {..._tooltipProps} {...tooltipProps} />
   }
 
   const renderLegend = () => {
@@ -174,10 +181,10 @@ export const LineChart = ({
     }
 
     if (legendComponent) {
-      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} />
+      return <Legend content={legendComponent} wrapperStyle={{ paddingLeft: 60 }} {...legendProps} />
     }
 
-    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} />
+    return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} {...legendProps} />
   }
 
   return (
@@ -186,7 +193,12 @@ export const LineChart = ({
         (width && height)
           ? (
             <Chart ref={chartRef} data={data} width={width} height={height} {...props}>
-              <CartesianGrid vertical={false} horizontal />
+              <CartesianGrid
+                vertical={false}
+                horizontal
+                strokeDasharray="4"
+                opacity={0.5}
+              />
               {renderXAxis()}
               {renderYAxis()}
               {renderTooltip()}

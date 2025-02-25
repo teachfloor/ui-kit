@@ -1,7 +1,25 @@
 import { useMemo } from 'react'
 
+import { useTeachfloorTheme } from '../../'
+
 const useHexColors = () => {
+  const theme = useTeachfloorTheme()
+
   const generateHexColor = (index) => {
+    const colors = [
+      'blue',
+      'teal',
+      'violet',
+      'orange',
+      'indigo',
+      'green',
+      'pink',
+    ]
+
+    if (colors[index]) {
+      return theme.colors[colors[index]][6]
+    }
+
     const startingHue = 215; // Hue for #1c7ed6
     const saturation = 60; // Saturation for #1c7ed6
     const lightness = 54; // Lightness for #1c7ed6
