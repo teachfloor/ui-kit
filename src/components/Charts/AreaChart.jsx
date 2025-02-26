@@ -12,18 +12,18 @@ import useYAxisAutoWidth from './useYAxisAutoWidth'
 
 import {
   CartesianGrid,
-  LineChart as Chart,
+  AreaChart as Chart,
   XAxis,
   YAxis,
-  Line,
+  Area,
   Tooltip,
   Legend,
 } from 'recharts'
 
 /**
- * LineChart
+ * AreaChart
  */
-export const LineChart = ({
+export const AreaChart = ({
   data,
   x,
   y,
@@ -76,20 +76,21 @@ export const LineChart = ({
     const renderYData = () => {
       if (typeof y === 'string') {
         return (
-          <Line
+          <Area
             type={curveType}
             dataKey={y}
             strokeWidth={2}
             stroke={generateHexColor(0)}
             isAnimationActive={false}
             dot={false}
+            fill={`url(#color${y})`}
           />
         )
       }
 
       if (typeof y === 'object' && !Array.isArray(y)) {
         return (
-          <Line
+          <Area
             type={y.type || curveType}
             dataKey={y.value}
             name={y.label}
@@ -97,6 +98,7 @@ export const LineChart = ({
             stroke={generateHexColor(0)}
             isAnimationActive={false}
             dot={false}
+            fill={`url(#color${y.value})`}
           />
         )
       }
@@ -105,7 +107,7 @@ export const LineChart = ({
         return y.map((item, i) => {
           if (typeof item === 'object' && !Array.isArray(item)) {
             return (
-              <Line
+              <Area
                 key={`${item.value}${i}`}
                 type={item.type || curveType}
                 dataKey={item.value}
@@ -114,13 +116,14 @@ export const LineChart = ({
                 stroke={generateHexColor(i)}
                 isAnimationActive={false}
                 dot={false}
+                fill={`url(#color${item.value})`}
               />
             )
           }
 
           if (typeof item === 'string') {
             return (
-              <Line
+              <Area
                 key={`${item}${i}`}
                 type="natural"
                 dataKey={item}
@@ -128,6 +131,7 @@ export const LineChart = ({
                 stroke={generateHexColor(i)}
                 isAnimationActive={false}
                 dot={false}
+                fill={`url(#color${item})`}
               />
             )
           }
@@ -143,6 +147,7 @@ export const LineChart = ({
       return (
         <>
           <YAxis
+            // axisLine={false}
             tick={<CustomYTick formatter={getFormatter(y.value || y)} />}
             style={{ fontSize: 12 }}
             axisLine={{ stroke: theme.fn.rgba(theme.colors.gray[4], 0.5) }}
@@ -187,6 +192,47 @@ export const LineChart = ({
     return <Legend content={<CustomLegend />} wrapperStyle={{ paddingLeft: 60 }} {...legendProps} />
   }
 
+  const renderDefs = () => {
+    const renderLinearGradients = () => {
+      const renderLinearGradient = (dataKey, index) => (
+        <linearGradient id={`color${dataKey}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor={generateHexColor(index)} stopOpacity={0.8} />
+          <stop offset="95%" stopColor={generateHexColor(index)} stopOpacity={0} />
+        </linearGradient>
+      )
+
+      if (typeof y === 'string') {
+        return renderLinearGradient(y, 0)
+      }
+
+      if (typeof y === 'object' && !Array.isArray(y)) {
+        return renderLinearGradient(y.value, 0)
+      }
+
+      if (Array.isArray(y)) {
+        return y.map((item, i) => {
+          if (typeof item === 'object' && !Array.isArray(item)) {
+            return renderLinearGradient(item.value, i)
+          }
+
+          if (typeof item === 'string') {
+            return renderLinearGradient(item, i)
+          }
+
+          return null
+        })
+      }
+
+      return null
+    }
+
+    return (
+      <defs>
+        {renderLinearGradients()}
+      </defs>
+    )
+  }
+
   return (
     <Box ref={containerRef} w="100%" h="100%">
       {
@@ -203,6 +249,7 @@ export const LineChart = ({
               {renderYAxis()}
               {renderTooltip()}
               {renderLegend()}
+              {renderDefs()}
               {children}
             </Chart>
           )
@@ -212,4 +259,4 @@ export const LineChart = ({
   )
 }
 
-export default LineChart
+export default AreaChart

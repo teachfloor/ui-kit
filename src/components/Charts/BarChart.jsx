@@ -62,8 +62,8 @@ export const BarChart = ({
           tickSize={4}
           tick={<CustomXTick />}
           style={{ fontSize: 12 }}
-          axisLine={{ stroke: theme.colors.gray[3] }}
-          tickLine={{ stroke: theme.colors.gray[3] }}
+          axisLine={{ stroke: theme.fn.rgba(theme.colors.gray[4], 0.5) }}
+          tickLine={{ stroke: theme.fn.rgba(theme.colors.gray[4], 0.5) }}
         />
       )
     }
@@ -136,8 +136,8 @@ export const BarChart = ({
           <YAxis
             tick={<CustomYTick formatter={getFormatter(y.value || y)} />}
             style={{ fontSize: 12 }}
-            axisLine={{ stroke: theme.colors.gray[3] }}
-            tickLine={{ stroke: theme.colors.gray[3] }}
+            axisLine={{ stroke: theme.fn.rgba(theme.colors.gray[4], 0.5) }}
+            tickLine={{ stroke: theme.fn.rgba(theme.colors.gray[4], 0.5) }}
             width={yAxisWidth}
           />
           {renderYData()}
