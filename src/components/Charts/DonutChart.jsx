@@ -15,6 +15,8 @@ import {
   Legend,
 } from 'recharts'
 
+const RADIAN = Math.PI / 180
+
 /**
  * DonutChart
  */
@@ -31,6 +33,7 @@ export const DonutChart = ({
   strokeWidth = 0,
   withLabels = false,
   labelsType = 'value',
+  labelsPosition = 'outside',
   pieProps = {},
   tooltipProps = {},
   legendProps = {},
@@ -40,7 +43,41 @@ export const DonutChart = ({
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
 
-  const getLabel = (labelsType = 'value') => ({ x, y, cx, cy, percent, value }) => {
+  const getLabel = (labelsType = 'value', labelsPosition = 'outside') => ({
+    x,
+    y,
+    cx,
+    cy,
+    percent,
+    value,
+    midAngle,
+    innerRadius,
+    outerRadius,
+  }) => {
+    const getFormattedValue = () => (
+      labelsType === 'percent'
+        ? `${(percent * 100).toFixed(0)}%`
+        : value
+    )
+
+    if (labelsPosition === 'inside') {
+      const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+
+      return (
+        <text
+          x={cx + radius * Math.cos(-midAngle * RADIAN)}
+          y={cy + radius * Math.sin(-midAngle * RADIAN)}
+          fill="white"
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontFamily={theme.fontFamily}
+          fontSize={12}
+        >
+          {getFormattedValue()}
+        </text>
+      )
+    }
+
     return (
       <text
         x={x}
@@ -53,11 +90,7 @@ export const DonutChart = ({
         fontSize={12}
       >
         <tspan x={x}>
-          {
-            labelsType === 'percent'
-              ? `${(percent * 100).toFixed(0)}%`
-              : value
-          }
+          {getFormattedValue()}
         </tspan>
       </text>
     )
@@ -73,6 +106,14 @@ export const DonutChart = ({
   ));
 
   const renderPie = () => {
+    const getLabelProp = () => {
+      if (!withLabels) {
+        return false
+      }
+
+      return getLabel(labelsType || 'value', labelsPosition || 'outside')
+    }
+
     return (
       <Pie
         data={data}
@@ -82,7 +123,7 @@ export const DonutChart = ({
         innerRadius={size / 2 - thickness}
         outerRadius={size / 2}
         paddingAngle={paddingAngle}
-        label={withLabels ? getLabel(labelsType || 'value') : false}
+        label={getLabelProp()}
         {...pieProps}
       >
         {cells}

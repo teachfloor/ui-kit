@@ -45,7 +45,11 @@ export default {
     labelsType: {
       options: ['value', 'percent'],
       control: { type: 'radio' },
-     },
+    },
+    labelsPosition: {
+      options: ['inside', 'outside'],
+      control: { type: 'radio' },
+    },
   },
 }
 
