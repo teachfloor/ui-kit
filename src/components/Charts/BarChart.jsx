@@ -30,7 +30,7 @@ export const BarChart = ({
   y,
   withLegend = false,
   withTooltip = true,
-  withFocusBar = true,
+  withFocusBar = false,
   tooltipComponent = null,
   legendComponent = null,
   children,
