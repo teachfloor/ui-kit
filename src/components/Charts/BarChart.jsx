@@ -30,7 +30,7 @@ export const BarChart = ({
   y,
   withLegend = false,
   withTooltip = true,
-  withFocusBar = false,
+  withFocusBar = true,
   tooltipComponent = null,
   legendComponent = null,
   children,
@@ -83,7 +83,7 @@ export const BarChart = ({
           fill={
             focusBarIndex === index || mouseLeave
               ? generateHexColor(i)
-              : theme.fn.rgba(generateHexColor(i), 0.2)
+              : generateHexColor(i, 1)
           }
         />
       ))

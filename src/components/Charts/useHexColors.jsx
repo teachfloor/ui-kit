@@ -5,7 +5,7 @@ import { useTeachfloorTheme } from '../../'
 const useHexColors = () => {
   const theme = useTeachfloorTheme()
 
-  const generateHexColor = (index) => {
+  const generateHexColor = (index, shade = 6) => {
     const colors = [
       'blue',
       'teal',
@@ -17,7 +17,7 @@ const useHexColors = () => {
     ]
 
     if (colors[index]) {
-      return theme.colors[colors[index]][6]
+      return theme.colors[colors[index]][shade]
     }
 
     const startingHue = 215; // Hue for #1c7ed6
@@ -27,7 +27,19 @@ const useHexColors = () => {
     const goldenAngle = 137.508; // Golden angle in degrees
     const hue = (startingHue + index * goldenAngle) % 360;
 
-    return hslToHex(hue, saturation, lightness);
+    const simulatedShade = {
+      0: 0.1,
+      1: 0.2,
+      2: 0.3,
+      3: 0.4,
+      4: 0.6,
+      5: 0.8,
+      6: 1,
+    }
+
+    return simulatedShade[shade]
+      ? theme.fn.rgba(hslToHex(hue, saturation, lightness), shade)
+      : hslToHex(hue, saturation, lightness)
   };
 
   const hslToHex = (h, s, l) => {
