@@ -20,6 +20,7 @@ export default {
   argTypes: {
     withTooltip: { control: 'boolean' },
     withLegend: { control: 'boolean' },
+    withFocusBar: { control: 'boolean' },
   },
 }
 

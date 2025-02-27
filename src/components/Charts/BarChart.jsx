@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Box, useTeachfloorTheme } from '../../'
 
@@ -18,6 +18,7 @@ import {
   Bar,
   Tooltip,
   Legend,
+  Cell
 } from 'recharts'
 
 /**
@@ -29,6 +30,7 @@ export const BarChart = ({
   y,
   withLegend = false,
   withTooltip = true,
+  withFocusBar = false,
   tooltipComponent = null,
   legendComponent = null,
   children,
@@ -38,6 +40,8 @@ export const BarChart = ({
 }) => {
   const theme = useTeachfloorTheme()
   const { containerRef, width, height } = useResizable()
+  const [focusBarIndex, setFocusBarIndex] = useState(null)
+  const [mouseLeave, setMouseLeave] = useState(true)
   const generateHexColor = useHexColors()
   const { yAxisWidth, chartRef } = useYAxisAutoWidth({
     yAxisWidthModifier: (x) => (x + 5)
@@ -72,6 +76,19 @@ export const BarChart = ({
   }
 
   const renderYAxis = () => {
+    const renderCells = (data, i, focusBarIndex, mouseLeave) => {
+      return data.map((entry, index) => (
+        <Cell
+          key={`cell-${index}`}
+          fill={
+            focusBarIndex === index || mouseLeave
+              ? generateHexColor(i)
+              : theme.fn.rgba(generateHexColor(i), 0.2)
+          }
+        />
+      ))
+    }
+
     const renderYData = () => {
       if (typeof y === 'string') {
         return (
@@ -80,7 +97,9 @@ export const BarChart = ({
             // strokeWidth={2}
             fill={generateHexColor(0)}
             isAnimationActive={false}
-          />
+          >
+            {renderCells(data, 0, focusBarIndex, mouseLeave)}
+          </Bar>
         )
       }
 
@@ -92,7 +111,9 @@ export const BarChart = ({
             fill={generateHexColor(0)}
             isAnimationActive={false}
             radius={[4, 4, 0, 0]}
-          />
+          >
+            {renderCells(data, 0, focusBarIndex, mouseLeave)}
+          </Bar>
         )
       }
 
@@ -107,7 +128,9 @@ export const BarChart = ({
                 fill={generateHexColor(i)}
                 isAnimationActive={false}
                 radius={[4, 4, 0, 0]}
-              />
+              >
+                {renderCells(data, i, focusBarIndex, mouseLeave)}
+              </Bar>
             )
           }
 
@@ -119,7 +142,9 @@ export const BarChart = ({
                 fill={generateHexColor(i)}
                 isAnimationActive={false}
                 radius={[4, 4, 0, 0]}
-              />
+              >
+                {renderCells(data, i, focusBarIndex, mouseLeave)}
+              </Bar>
             )
           }
 
@@ -183,7 +208,25 @@ export const BarChart = ({
       {
         (width && height)
           ? (
-            <Chart ref={chartRef} data={data} width={width} height={height} {...props}>
+            <Chart
+              ref={chartRef}
+              data={data}
+              width={width}
+              height={height}
+              onMouseMove={(state) => {
+                if (withFocusBar) {
+                  if (state.isTooltipActive) {
+                    setFocusBarIndex(state.activeTooltipIndex)
+                    setMouseLeave(false)
+                  } else {
+                    setFocusBarIndex(null)
+                    setMouseLeave(true)
+                  }
+                }
+              }}
+              onMouseLeave={() => setMouseLeave(true)}
+              {...props}
+            >
               <CartesianGrid
                 vertical={false}
                 horizontal
