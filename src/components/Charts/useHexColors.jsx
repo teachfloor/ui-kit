@@ -16,6 +16,10 @@ const useHexColors = () => {
       'pink',
     ]
 
+    if (theme.colors.brand) {
+      colors[0] = 'brand'
+    }
+
     if (colors[index]) {
       return theme.colors[colors[index]][shade]
     }
