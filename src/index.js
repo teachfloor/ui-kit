@@ -13,6 +13,7 @@ export * from './nprogress'
 export * from './notifications'
 export * from './prism'
 export * from './spotlight'
+export * from './tiptap'
 
 /**
  * Mantine addons

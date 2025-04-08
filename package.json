@@ -61,6 +61,7 @@
     "@mantine/nprogress": "^6.0.4",
     "@mantine/prism": "^6.0.4",
     "@mantine/spotlight": "^6.0.4",
+    "@mantine/tiptap": "^6.0.4",
     "@tabler/icons-react": "^2.40.0",
     "dayjs": "^1.11.7",
     "embla-carousel-react": "^7.1.0",
