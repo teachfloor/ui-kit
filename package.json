@@ -91,7 +91,11 @@
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@tiptap/react": "^2.11.7",
+    "@tiptap/core": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
+    "@tiptap/extension-link": "^2.11.7"
   },
   "release-it": {
     "github": {

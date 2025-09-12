@@ -56,7 +56,7 @@ export const DonutChart = ({
   }) => {
     const getFormattedValue = () => (
       labelsType === 'percent'
-        ? `${(percent * 100).toFixed(0)}%`
+        ? `${(percent * 100).toFixed(2)}%`
         : value
     )
 

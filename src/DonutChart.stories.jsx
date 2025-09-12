@@ -60,11 +60,27 @@ const data = [
   { name: 'Other', value: 200 },
 ]
 
+const data2 = [
+  { name: 'USA', value: 19 },
+  { name: 'India', value: 2 },
+  { name: 'Japan', value: 2 },
+]
+
 const DonutChartTemplate = (args) => (
   <TeachfloorProvider>
     <SimpleGrid>
       <Box h={250}>
         <DonutChart data={data} {...args} />
+      </Box>
+      <Box h={250}>
+        <DonutChart
+          data={data2}
+          thickness={45}
+          labelsType="percent"
+          labelsPosition="inside"
+          withLabels
+          withLegend
+        />
       </Box>
     </SimpleGrid>
   </TeachfloorProvider>
