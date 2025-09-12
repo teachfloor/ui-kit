@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Box, useTeachfloorTheme } from '../../'
 
@@ -16,6 +16,14 @@ import {
 } from 'recharts'
 
 const RADIAN = Math.PI / 180
+
+const toPercentages = (values) => {
+  const total = values.reduce((a, b) => a + b, 0)
+  let scaled = values.map(v => Math.round((v / total) * 10000))
+  const diff = 10000 - scaled.reduce((a, b) => a + b, 0)
+  scaled[scaled.length - 1] += diff
+  return scaled.map(v => v / 100)
+}
 
 /**
  * DonutChart
@@ -42,6 +50,20 @@ export const DonutChart = ({
   const theme = useTeachfloorTheme()
   const { containerRef, width, height } = useResizable()
   const generateHexColor = useHexColors()
+  const [chartData, setChartData] = useState([])
+
+  useEffect(() => {
+    if (!data || !data.length) return
+    const values = data.map(d => d.value)
+    const formattedPercents = toPercentages(values)
+
+    setChartData(
+      data.map((d, i) => ({
+        ...d,
+        value: formattedPercents[i],
+      }))
+    )
+  }, [data])
 
   const getLabel = (labelsType = 'value', labelsPosition = 'outside') => ({
     x,
@@ -96,7 +118,7 @@ export const DonutChart = ({
     )
   }
 
-  const cells = data.map((item, index) => (
+  const cells = chartData.map((item, index) => (
     <Cell
       key={index}
       fill={item.color || generateHexColor(index)}
@@ -116,7 +138,7 @@ export const DonutChart = ({
 
     return (
       <Pie
-        data={data}
+        data={chartData}
         dataKey="value"
         fill={generateHexColor(0)}
         isAnimationActive={false}
@@ -166,7 +188,7 @@ export const DonutChart = ({
       {
         (width && height)
           ? (
-            <Chart data={data} width={width} height={height} {...props}>
+            <Chart data={chartData} width={width} height={height} {...props}>
               {renderPie()}
               {renderTooltip()}
               {renderLegend()}
